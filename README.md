@@ -1,1 +1,4 @@
-# zsh-kickstart
+# ⏩ zsh-kickstart
+
+> [!NOTE]
+> ⚙️ Work in progress
