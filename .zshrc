@@ -115,6 +115,10 @@ alias lla="ls -lA"
 # Disables highlighting of pasted text.
 zle_highlight+=(paste:none)
 
+# If a command is issued that can’t be executed as a normal command, and the
+# command is the name of a directory, perform the cd command to that directory.
+setopt autocd
+
 # Makes the "command not found" message more beautiful and informative.
 command_not_found_handler() {
     printf "%sERROR:%s command %s not found.\n" \
