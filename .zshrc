@@ -6,17 +6,16 @@
 #                          |_|
 #
 ## INITIALIZATION =============================================================
-# Declares cache directory path. By default zcompdump is created in the home
-# directory, so we will create a directory for the zsh cache
-# in a separate directory to clean things up a little bit.
+# By default zcompdump is created in the home directory, so we will create a
+# directory for the zsh cache in a separate directory to clean things up a
+# little bit.
 CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 
 # Creates the cache directory if doesn't exist, as compinit will fail if it
 # doesn't find the directory in which .zcompdump is specified to be located.
 [[ ! -d "$CACHE_DIR" ]] && mkdir -p "$CACHE_DIR"
 
-# Declares zcompdump path. The .zcompdump file is used to improve compinit's
-# initialization time.
+# The .zcompdump file is used to improve compinit's initialization time.
 ZCOMPDUMP_PATH="$CACHE_DIR/.zcompdump"
 
 ## COMPLETIONS ================================================================
@@ -48,19 +47,30 @@ bindkey -e
 # These additional shortcuts only apply to emacs mode, since they have the
 # `-M emacs` flag.
 
-# TODO: Needs rework.
+# [Ctrl-LeftArrow] - move backward one word
 bindkey -M emacs "^[[1;5D" backward-word
+# [Ctrl-RightArrow] - move forward one word
 bindkey -M emacs "^[[1;5C" forward-word
 
+# [Alt-LeftArrow] - move backward one word
 bindkey -M emacs "^[[1;3D" backward-word
+# [Alt-RightArrow] - move forward one word
 bindkey -M emacs "^[[1;3C" forward-word
 
+# [Shift-Tab] - move through the completion menu backwards
 bindkey -M emacs "^[[Z" reverse-menu-complete
 
+# [Delete] - delete forward
+bindkey -M emacs "^[[3~" delete-char
+# [Ctrl-Delete] - delete whole forward-word
+bindkey -M emacs '^[[3;5~' kill-word
+
+# Start typing + [Up-Arrow] - fuzzy find history forward
 autoload -U up-line-or-beginning-search
 zle -N up-line-or-beginning-search
 bindkey -M emacs "^[[A" up-line-or-beginning-search
 
+# Start typing + [Down-Arrow] - fuzzy find history backward
 autoload -U down-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey -M emacs "^[[B" down-line-or-beginning-search
@@ -84,17 +94,21 @@ SAVEHIST=10000                # Number of commands to save between sessions.
 setopt share_history          # Share history between sessions.
 
 ## ALIASES ====================================================================
-# Useful aliases to list files. Take a look at https://github.com/eza-community/eza.
-alias ls="ls --group-directories-first --color=auto"
-alias la="ls -A --group-directories-first --color=auto"
-alias ll="ls -l --group-directories-first --color=auto"
-alias lla="ls -lA --group-directories-first --color=auto"
+# Ls doesn't have color enabled by default, so this alias enables it.
+# Additionally, you can include --group-directories-first if you prefer
+# to see directories listed first.
+alias ls="ls --color=auto"
 
-# Grep doesn't have color by default.
+# Grep doesn't have color enabled by default either.
 alias grep="grep --color=auto"
 
-# Will create an alias to trash-cli if is installed. The use of trash-cli is
-# recommended, as `rm` deletes files almost permanently.
+# Useful aliases to list files. Take a look at https://github.com/eza-community/eza.
+alias la="ls -A"
+alias ll="ls -l"
+alias lla="ls -lA"
+
+# If trash-cli is installed, this creates an alias to use it instead of rm.
+# Using trash-cli is recommended since rm deletes files almost permanently.
 [[ -n "$commands[trash]" ]] && alias rm="trash"
 
 ## OTHER ======================================================================
