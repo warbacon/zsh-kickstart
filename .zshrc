@@ -40,6 +40,9 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' use-cache true
 zstyle ':completion:*' cache-path "$CACHE_DIR/.zcompcache"
 
+# Attempts to find new commands to complete.
+zstyle ':completion:*' rehash true
+
 ## KEYBINDINGS ================================================================
 # Forces the use of emacs keyboard shortcuts. By default uses the vim ones,
 # but they are not very good by default and can be confusing for novice users.
